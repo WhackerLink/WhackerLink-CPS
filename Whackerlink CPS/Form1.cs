@@ -546,5 +546,11 @@ namespace Whackerlink_CPS
             AboutBox1 about = new AboutBox1();
             about.ShowDialog();
         }
+
+        private void RibbonHelpHelpHelpTopics_Click(object sender, EventArgs e)
+        {
+            HelpForm help = new HelpForm();
+            help.ShowDialog();
+        }
     }
 }

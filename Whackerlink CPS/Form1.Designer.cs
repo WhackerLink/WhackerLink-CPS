@@ -58,7 +58,7 @@
             this.kryptonRibbonGroup4 = new Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple5 = new Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.RibbonHelpHelpAbout = new Krypton.Ribbon.KryptonRibbonGroupButton();
-            this.kryptonRibbonGroupButton2 = new Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.RibbonHelpHelpHelpTopics = new Krypton.Ribbon.KryptonRibbonGroupButton();
             this.kryptonRibbonGroupButton4 = new Krypton.Ribbon.KryptonRibbonGroupButton();
             this.kryptonPanel1 = new Krypton.Toolkit.KryptonPanel();
             this.treeView1 = new Krypton.Toolkit.KryptonTreeView();
@@ -85,6 +85,7 @@
             this.kryptonRibbonTab1,
             this.kryptonRibbonTab2,
             this.kryptonRibbonTab3});
+            this.kryptonRibbon1.SelectedContext = null;
             this.kryptonRibbon1.SelectedTab = this.kryptonRibbonTab1;
             this.kryptonRibbon1.Size = new System.Drawing.Size(2002, 259);
             this.kryptonRibbon1.TabIndex = 0;
@@ -253,12 +254,13 @@
             // 
             this.kryptonRibbonGroup4.Items.AddRange(new Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple5});
+            this.kryptonRibbonGroup4.TextLine1 = "Help";
             // 
             // kryptonRibbonGroupTriple5
             // 
             this.kryptonRibbonGroupTriple5.Items.AddRange(new Krypton.Ribbon.KryptonRibbonGroupItem[] {
             this.RibbonHelpHelpAbout,
-            this.kryptonRibbonGroupButton2,
+            this.RibbonHelpHelpHelpTopics,
             this.kryptonRibbonGroupButton4});
             // 
             // RibbonHelpHelpAbout
@@ -267,9 +269,10 @@
             this.RibbonHelpHelpAbout.TextLine1 = "About";
             this.RibbonHelpHelpAbout.Click += new System.EventHandler(this.kryptonRibbonGroupButton1_Click);
             // 
-            // kryptonRibbonGroupButton2
+            // RibbonHelpHelpHelpTopics
             // 
-            this.kryptonRibbonGroupButton2.Visible = false;
+            this.RibbonHelpHelpHelpTopics.ImageLarge = global::Whackerlink_CPS.Properties.Resources.Search;
+            this.RibbonHelpHelpHelpTopics.Click += new System.EventHandler(this.RibbonHelpHelpHelpTopics_Click);
             // 
             // kryptonRibbonGroupButton4
             // 
@@ -355,7 +358,7 @@
         private Krypton.Ribbon.KryptonRibbonGroup kryptonRibbonGroup4;
         private Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple5;
         private Krypton.Ribbon.KryptonRibbonGroupButton RibbonHelpHelpAbout;
-        private Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton2;
+        private Krypton.Ribbon.KryptonRibbonGroupButton RibbonHelpHelpHelpTopics;
         private Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton4;
     }
 }

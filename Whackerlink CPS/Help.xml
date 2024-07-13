@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<HelpManual>
+	<TableOfContents>
+		<Item>Overview</Item>
+		<Item>System Requirements</Item>
+		<Item>
+			Getting Started<SubItem>Installation</SubItem><SubItem>Launching the Software</SubItem>
+		</Item>
+		<Item>
+			Main Interface<SubItem>Search Bar</SubItem><SubItem>Treeview</SubItem><SubItem>Display Page</SubItem>
+		</Item>
+		<Item>
+			Managing Systems<SubItem>Add System</SubItem><SubItem>Delete System</SubItem>
+		</Item>
+		<Item>
+			Managing Channels<SubItem>Add Channel</SubItem><SubItem>Delete Channel</SubItem>
+		</Item>
+		<Item>
+			Managing Zones<SubItem>Add Zone</SubItem><SubItem>Delete Zone</SubItem>
+		</Item>
+		<Item>Updating Entries</Item>
+	</TableOfContents>
+
+	<Section id="Overview">
+		<Title>Overview</Title>
+		<Content>WhackerLink CPS is a comprehensive tool for managing communication systems, zones, and channels. This manual provides instructions on using the software, including adding, deleting, and updating various components.</Content>
+	</Section>
+
+	<Section id="SystemRequirements">
+		<Title>System Requirements</Title>
+		<Content>
+			<Requirement>OS: Windows 10 or higher</Requirement>
+			<Requirement>RAM: 4 GB minimum</Requirement>
+			<Requirement>Disk Space: 100 MB minimum</Requirement>
+			<Requirement>Visual Studio 2019 or higher</Requirement>
+		</Content>
+	</Section>
+
+	<Section id="GettingStarted">
+		<Title>Getting Started</Title>
+		<SubSection id="Installation">
+			<Title>Installation</Title>
+			<Content>
+				<Step>Clone or download the WhackerLink CPS repository from the official GitHub page.</Step>
+				<Step>Open the solution file (.sln) in Visual Studio.</Step>
+				<Step>Build the solution by pressing Ctrl+Shift+B.</Step>
+			</Content>
+		</SubSection>
+		<SubSection id="LaunchingTheSoftware">
+			<Title>Launching the Software</Title>
+			<Content>
+				<Step>Press F5 to run the application in Visual Studio.</Step>
+				<Step>The main interface will appear with a search bar, treeview, and display page.</Step>
+			</Content>
+		</SubSection>
+	</Section>
+
+	<Section id="MainInterface">
+		<Title>Main Interface</Title>
+		<SubSection id="SearchBar">
+			<Title>Search Bar</Title>
+			<Content>Use the search bar at the top to quickly find systems, channels, or zones. Type in the name or partial name to filter results in the treeview.</Content>
+		</SubSection>
+		<SubSection id="Treeview">
+			<Title>Treeview</Title>
+			<Content>The treeview on the left displays a hierarchical view of systems, zones, and channels. Expand or collapse items to navigate through the structure.</Content>
+		</SubSection>
+		<SubSection id="DisplayPage">
+			<Title>Display Page</Title>
+			<Content>The display page on the right shows detailed information about the selected item in the treeview. It also provides options to add, delete, or update entries.</Content>
+		</SubSection>
+	</Section>
+
+	<Section id="ManagingSystems">
+		<Title>Managing Systems</Title>
+		<SubSection id="AddSystem">
+			<Title>Add System</Title>
+			<Content>
+				<Step>Click on the "Add System" button below the treeview.</Step>
+				<Step>
+					Fill in the following details:<Detail>Name: Enter the system name.</Detail><Detail>Address: Enter the system address.</Detail><Detail>Port: Enter the system port.</Detail><Detail>RID: Enter the system RID.</Detail>
+				</Step>
+				<Step>Click "Save" to add the system.</Step>
+			</Content>
+		</SubSection>
+		<SubSection id="DeleteSystem">
+			<Title>Delete System</Title>
+			<Content>
+				<Step>Select the system from the treeview.</Step>
+				<Step>Click the "Delete System" button.</Step>
+				<Step>Confirm the deletion in the prompt.</Step>
+			</Content>
+		</SubSection>
+	</Section>
+
+	<Section id="ManagingChannels">
+		<Title>Managing Channels</Title>
+		<SubSection id="AddChannel">
+			<Title>Add Channel</Title>
+			<Content>
+				<Step>Select the zone where you want to add the channel.</Step>
+				<Step>Click on the "Add Channel" button below the treeview.</Step>
+				<Step>
+					Fill in the following details:<Detail>Name: Enter the channel name.</Detail><Detail>System: Select the associated system.</Detail><Detail>TGID: Enter the TGID.</Detail>
+				</Step>
+				<Step>Click "Save" to add the channel.</Step>
+			</Content>
+		</SubSection>
+		<SubSection id="DeleteChannel">
+			<Title>Delete Channel</Title>
+			<Content>
+				<Step>Select the channel from the treeview.</Step>
+				<Step>Click the "Delete Channel" button.</Step>
+				<Step>Confirm the deletion in the prompt.</Step>
+			</Content>
+		</SubSection>
+	</Section>
+
+	<Section id="ManagingZones">
+		<Title>Managing Zones</Title>
+		<SubSection id="AddZone">
+			<Title>Add Zone</Title>
+			<Content>
+				<Step>Click on the "Add Zone" button below the treeview.</Step>
+				<Step>Fill in the zone name.</Step>
+				<Step>Click "Save" to add the zone.</Step>
+			</Content>
+		</SubSection>
+		<SubSection id="DeleteZone">
+			<Title>Delete Zone</Title>
+			<Content>
+				<Step>Select the zone from the treeview.</Step>
+				<Step>Click the "Delete Zone" button.</Step>
+				<Step>Confirm the deletion in the prompt.</Step>
+			</Content>
+		</SubSection>
+	</Section>
+
+	<Section id="UpdatingEntries">
+		<Title>Updating Entries</Title>
+		<Content>
+			<Step>Select the item (system, channel, or zone) from the treeview.</Step>
+			<Step>Edit the details on the display page.</Step>
+			<Step>Click "Update" to save changes.</Step>
+		</Content>
+	</Section>
+</HelpManual>
