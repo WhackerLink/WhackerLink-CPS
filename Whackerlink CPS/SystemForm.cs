@@ -178,6 +178,11 @@ namespace Whackerlink_CPS
         {
 
         }
+
+        private void kryptonLabel4_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
     

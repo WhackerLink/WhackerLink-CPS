@@ -100,9 +100,10 @@
             this.kryptonLabel4.Location = new System.Drawing.Point(44, 146);
             this.kryptonLabel4.Margin = new System.Windows.Forms.Padding(2);
             this.kryptonLabel4.Name = "kryptonLabel4";
-            this.kryptonLabel4.Size = new System.Drawing.Size(43, 20);
+            this.kryptonLabel4.Size = new System.Drawing.Size(33, 20);
             this.kryptonLabel4.TabIndex = 7;
-            this.kryptonLabel4.Values.Text = "TG ID:";
+            this.kryptonLabel4.Values.Text = "RID:";
+            this.kryptonLabel4.Click += new System.EventHandler(this.kryptonLabel4_Click);
             // 
             // txtRid
             // 
