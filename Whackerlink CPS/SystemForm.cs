@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace Whackerlink_CPS
@@ -30,6 +31,7 @@ namespace Whackerlink_CPS
         private TreeNode _selectedNode;
         private List<string> _systemNames;
         private List<string> _systemIds;
+        private BindingList<Site> sites = new BindingList<Site>();
 
         public event EventHandler<SystemUpdateEventArgs> SystemUpdated;
 
@@ -55,6 +57,18 @@ namespace Whackerlink_CPS
                 txtAddress.Text = systemData.Address;
                 txtPort.Text = systemData.Port.ToString();
                 txtRid.Text = systemData.Rid;
+
+                SetupSiteGridView();
+                sites.Clear();
+
+                if (systemData.Site != null)
+                {
+                    sites.Add(systemData.Site);
+                }
+                else
+                {
+                    MessageBox.Show("The site data is missing or null.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -75,12 +89,79 @@ namespace Whackerlink_CPS
                     SystemName = systemData.Name,
                     Address = systemData.Address,
                     Port = systemData.Port.ToString(),
-                    Rid = systemData.Rid
+                    Rid = systemData.Rid,
+                    Site = systemData.Site
                 });
 
-                // Update the tree view node
                 _selectedNode.Text = systemData.Name;
             }
+        }
+        private void SetupSiteGridView()
+        {
+            var dataGridView = sitesView;
+
+            dataGridView.Columns.Clear();
+
+            dataGridView.AutoGenerateColumns = false;
+            dataGridView.AllowUserToAddRows = false; // TODO: If and when we want multiple in the codeplug, handle it
+            dataGridView.AllowUserToDeleteRows = false;
+            dataGridView.AllowUserToResizeColumns = true;
+
+            var nameColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Name",
+                DataPropertyName = "Name"
+            };
+            dataGridView.Columns.Add(nameColumn);
+
+            var controlChannelColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Control Channel",
+                DataPropertyName = "ControlChannel"
+            };
+            dataGridView.Columns.Add(controlChannelColumn);
+
+/*            var voiceChannelsColumn = new DataGridViewButtonColumn
+            {
+                HeaderText = "Voice Channels",
+                Text = "Edit",
+                UseColumnTextForButtonValue = true
+            };
+            dataGridView.Columns.Add(voiceChannelsColumn);*/
+
+/*            var locationColumn = new DataGridViewButtonColumn
+            {
+                HeaderText = "Location",
+                Text = "Edit",
+                UseColumnTextForButtonValue = true
+            };
+            dataGridView.Columns.Add(locationColumn);*/
+
+            var siteIdColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Site ID",
+                DataPropertyName = "SiteID"
+            };
+            dataGridView.Columns.Add(siteIdColumn);
+
+            var systemIdColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "System ID",
+                DataPropertyName = "SystemID"
+            };
+            dataGridView.Columns.Add(systemIdColumn);
+
+/*
+            var rangeColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Range",
+                DataPropertyName = "Range"
+            };
+            dataGridView.Columns.Add(rangeColumn);*/
+
+            dataGridView.DataSource = sites;
+
+            dataGridView.Refresh();
         }
 
         public class SystemUpdateEventArgs : EventArgs
@@ -90,6 +171,7 @@ namespace Whackerlink_CPS
             public string Address { get; set; }
             public string Port { get; set; }
             public string Rid { get; set; }
+            public Site Site { get; set; }
         }
 
         private void txtRid_TextChanged(object sender, EventArgs e)

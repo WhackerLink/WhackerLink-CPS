@@ -37,12 +37,14 @@
             this.kryptonLabel4 = new Krypton.Toolkit.KryptonLabel();
             this.txtRid = new Krypton.Toolkit.KryptonTextBox();
             this.btnUpdate = new Krypton.Toolkit.KryptonButton();
+            this.sitesView = new Krypton.Toolkit.KryptonDataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.sitesView)).BeginInit();
             this.SuspendLayout();
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(150, 37);
-            this.txtName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtName.Location = new System.Drawing.Point(94, 49);
+            this.txtName.Margin = new System.Windows.Forms.Padding(2);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(106, 23);
             this.txtName.TabIndex = 0;
@@ -50,8 +52,8 @@
             // 
             // kryptonLabel1
             // 
-            this.kryptonLabel1.Location = new System.Drawing.Point(98, 38);
-            this.kryptonLabel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.kryptonLabel1.Location = new System.Drawing.Point(42, 50);
+            this.kryptonLabel1.Margin = new System.Windows.Forms.Padding(2);
             this.kryptonLabel1.Name = "kryptonLabel1";
             this.kryptonLabel1.Size = new System.Drawing.Size(46, 20);
             this.kryptonLabel1.TabIndex = 1;
@@ -59,8 +61,8 @@
             // 
             // kryptonLabel2
             // 
-            this.kryptonLabel2.Location = new System.Drawing.Point(72, 68);
-            this.kryptonLabel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.kryptonLabel2.Location = new System.Drawing.Point(16, 80);
+            this.kryptonLabel2.Margin = new System.Windows.Forms.Padding(2);
             this.kryptonLabel2.Name = "kryptonLabel2";
             this.kryptonLabel2.Size = new System.Drawing.Size(71, 20);
             this.kryptonLabel2.TabIndex = 3;
@@ -68,8 +70,8 @@
             // 
             // txtAddress
             // 
-            this.txtAddress.Location = new System.Drawing.Point(150, 68);
-            this.txtAddress.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtAddress.Location = new System.Drawing.Point(94, 80);
+            this.txtAddress.Margin = new System.Windows.Forms.Padding(2);
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(106, 23);
             this.txtAddress.TabIndex = 1;
@@ -77,8 +79,8 @@
             // 
             // kryptonLabel3
             // 
-            this.kryptonLabel3.Location = new System.Drawing.Point(108, 100);
-            this.kryptonLabel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.kryptonLabel3.Location = new System.Drawing.Point(52, 112);
+            this.kryptonLabel3.Margin = new System.Windows.Forms.Padding(2);
             this.kryptonLabel3.Name = "kryptonLabel3";
             this.kryptonLabel3.Size = new System.Drawing.Size(36, 20);
             this.kryptonLabel3.TabIndex = 5;
@@ -86,8 +88,8 @@
             // 
             // txtPort
             // 
-            this.txtPort.Location = new System.Drawing.Point(150, 100);
-            this.txtPort.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtPort.Location = new System.Drawing.Point(94, 112);
+            this.txtPort.Margin = new System.Windows.Forms.Padding(2);
             this.txtPort.Name = "txtPort";
             this.txtPort.Size = new System.Drawing.Size(106, 23);
             this.txtPort.TabIndex = 2;
@@ -95,8 +97,8 @@
             // 
             // kryptonLabel4
             // 
-            this.kryptonLabel4.Location = new System.Drawing.Point(100, 134);
-            this.kryptonLabel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.kryptonLabel4.Location = new System.Drawing.Point(44, 146);
+            this.kryptonLabel4.Margin = new System.Windows.Forms.Padding(2);
             this.kryptonLabel4.Name = "kryptonLabel4";
             this.kryptonLabel4.Size = new System.Drawing.Size(43, 20);
             this.kryptonLabel4.TabIndex = 7;
@@ -104,8 +106,8 @@
             // 
             // txtRid
             // 
-            this.txtRid.Location = new System.Drawing.Point(150, 133);
-            this.txtRid.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtRid.Location = new System.Drawing.Point(94, 145);
+            this.txtRid.Margin = new System.Windows.Forms.Padding(2);
             this.txtRid.Name = "txtRid";
             this.txtRid.Size = new System.Drawing.Size(106, 23);
             this.txtRid.TabIndex = 3;
@@ -114,19 +116,28 @@
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(157, 304);
-            this.btnUpdate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnUpdate.Location = new System.Drawing.Point(299, 304);
+            this.btnUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(99, 31);
             this.btnUpdate.TabIndex = 4;
             this.btnUpdate.Values.Text = "Update";
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
+            // sitesView
+            // 
+            this.sitesView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.sitesView.Location = new System.Drawing.Point(12, 183);
+            this.sitesView.Name = "sitesView";
+            this.sitesView.Size = new System.Drawing.Size(658, 102);
+            this.sitesView.TabIndex = 8;
+            // 
             // SystemForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(448, 346);
+            this.ClientSize = new System.Drawing.Size(682, 346);
+            this.Controls.Add(this.sitesView);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.kryptonLabel4);
             this.Controls.Add(this.txtRid);
@@ -136,9 +147,10 @@
             this.Controls.Add(this.txtAddress);
             this.Controls.Add(this.kryptonLabel1);
             this.Controls.Add(this.txtName);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "SystemForm";
             this.Text = "SystemForm";
+            ((System.ComponentModel.ISupportInitialize)(this.sitesView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -155,5 +167,6 @@
         private Krypton.Toolkit.KryptonLabel kryptonLabel4;
         private Krypton.Toolkit.KryptonTextBox txtRid;
         private Krypton.Toolkit.KryptonButton btnUpdate;
+        private Krypton.Toolkit.KryptonDataGridView sitesView;
     }
 }

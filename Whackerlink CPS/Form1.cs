@@ -119,7 +119,8 @@ namespace Whackerlink_CPS
                         Name = systemData.Name,
                         Address = systemData.Address,
                         Port = systemData.Port,
-                        Rid = systemData.Rid
+                        Rid = systemData.Rid,
+                        Site = systemData.Site
                     }
                 };
                 systemsNode.Nodes.Add(systemNode);
@@ -235,6 +236,7 @@ namespace Whackerlink_CPS
                 system.Address = e.Address;
                 system.Port = Int32.Parse(e.Port);
                 system.Rid = e.Rid;
+                system.Site = e.Site;
 
                 // Update the tree view node
                 var systemNode = treeView1.Nodes.Find(e.OriginalSystemName, true).FirstOrDefault();
@@ -248,7 +250,8 @@ namespace Whackerlink_CPS
                         Name = e.SystemName,
                         Address = e.Address,
                         Port = Int32.Parse(e.Port),
-                        Rid = e.Rid
+                        Rid = e.Rid,
+                        Site = e.Site
                     };
                 }
             }
