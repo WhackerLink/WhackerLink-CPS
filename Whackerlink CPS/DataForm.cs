@@ -39,7 +39,7 @@ namespace Whackerlink_CPS
                 string originalChannelName = _selectedNode.Text;
 
                 _selectedNode.Text = txtName.Text;
-                var channelData = _selectedNode.Tag as ChannelData ?? new ChannelData();
+                var channelData = _selectedNode.Tag as Codeplug.Channel ?? new Codeplug.Channel();
                 channelData.System = cmbSystems.SelectedItem.ToString();
                 channelData.Tgid = txtTgid.Text;
 
@@ -63,7 +63,7 @@ namespace Whackerlink_CPS
             if (_selectedNode != null)
             {
                 txtName.Text = _selectedNode.Text;
-                if (_selectedNode.Tag is ChannelData channelData)
+                if (_selectedNode.Tag is Codeplug.Channel channelData)
                 {
                     cmbSystems.SelectedItem = channelData.System;
                 }

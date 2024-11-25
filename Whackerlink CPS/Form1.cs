@@ -12,7 +12,7 @@ namespace Whackerlink_CPS
 {
     public partial class Form1 : Form
     {
-        private Root _yamlRoot;
+        private Codeplug _yamlRoot;
 
         public Form1()
         {
@@ -70,34 +70,35 @@ namespace Whackerlink_CPS
         {
             var deserializer = new DeserializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .IgnoreUnmatchedProperties()
                 .Build();
 
-            _yamlRoot = deserializer.Deserialize<Root>(yamlContent);
+            _yamlRoot = deserializer.Deserialize<Codeplug>(yamlContent);
 
             treeView1.Nodes.Clear();
 
             // RadioWide node
             TreeNode radioWideNode = new TreeNode("RadioWide");
-            radioWideNode.Nodes.Add(new TreeNode($"HostVersion: {_yamlRoot.RadioWide.hostVersion}"));
-            radioWideNode.Nodes.Add(new TreeNode($"CodeplugVersion: {_yamlRoot.RadioWide.codeplugVersion}"));
-            radioWideNode.Nodes.Add(new TreeNode($"RadioAlias: {_yamlRoot.RadioWide.radioAlias}"));
-            radioWideNode.Nodes.Add(new TreeNode($"SerialNumber: {_yamlRoot.RadioWide.serialNumber}"));
-            radioWideNode.Nodes.Add(new TreeNode($"Model: {_yamlRoot.RadioWide.model}"));
+            radioWideNode.Nodes.Add(new TreeNode($"HostVersion: {_yamlRoot.RadioWide.HostVersion}"));
+            radioWideNode.Nodes.Add(new TreeNode($"CodeplugVersion: {_yamlRoot.RadioWide.CodeplugVersion}"));
+            radioWideNode.Nodes.Add(new TreeNode($"RadioAlias: {_yamlRoot.RadioWide.RadioAlias}"));
+            radioWideNode.Nodes.Add(new TreeNode($"SerialNumber: {_yamlRoot.RadioWide.SerialNumber}"));
+            radioWideNode.Nodes.Add(new TreeNode($"Model: {_yamlRoot.RadioWide.Model}"));
             treeView1.Nodes.Add(radioWideNode);
 
             // Systems node
             TreeNode systemsNode = new TreeNode("Systems");
             foreach (var systemData in _yamlRoot.Systems)
             {
-                TreeNode systemNode = new TreeNode(systemData.name)
+                TreeNode systemNode = new TreeNode(systemData.Name)
                 {
-                    Name = systemData.name,
+                    Name = systemData.Name,
                     Tag = new SystemData
                     {
-                        Name = systemData.name,
-                        Address = systemData.address,
-                        Port = systemData.port,
-                        Rid = systemData.rid
+                        Name = systemData.Name,
+                        Address = systemData.Address,
+                        Port = systemData.Port.ToString(),
+                        Rid = systemData.Rid
                     }
                 };
                 systemsNode.Nodes.Add(systemNode);
@@ -108,20 +109,20 @@ namespace Whackerlink_CPS
             TreeNode zonesNode = new TreeNode("Zones");
             foreach (var zone in _yamlRoot.Zones)
             {
-                TreeNode zoneNode = new TreeNode(zone.name)
+                TreeNode zoneNode = new TreeNode(zone.Name)
                 {
-                    Name = zone.name
+                    Name = zone.Name
                 };
-                foreach (var channel in zone.channels)
+                foreach (var channel in zone.Channels)
                 {
-                    TreeNode channelNode = new TreeNode(channel.name)
+                    TreeNode channelNode = new TreeNode(channel.Name)
                     {
-                        Name = channel.name,
-                        Tag = new ChannelData
+                        Name = channel.Name,
+                        Tag = new Codeplug.Channel
                         {
-                            Name = channel.name,
-                            System = channel.system,
-                            Tgid = channel.tgid.ToString()
+                            Name = channel.Name,
+                            System = channel.System,
+                            Tgid = channel.Tgid.ToString()
                         }
                     };
                     zoneNode.Nodes.Add(channelNode);
@@ -135,16 +136,16 @@ namespace Whackerlink_CPS
 
         private void ShowDataForm(TreeNode selectedNode)
         {
-            var systemNames = _yamlRoot.Systems.Select(s => s.name).ToList();
-            var systemIds = _yamlRoot.Systems.Select(s => s.rid).ToList();
+            var systemNames = _yamlRoot.Systems.Select(s => s.Name).ToList();
+            var systemIds = _yamlRoot.Systems.Select(s => s.Rid).ToList();
 
             if (selectedNode.Parent != null)
             {
-                if (selectedNode.Parent.Parent != null && selectedNode.Parent.Parent.Text == "Zones" && selectedNode.Tag is ChannelData)
+                if (selectedNode.Parent.Parent != null && selectedNode.Parent.Parent.Text == "Zones" && selectedNode.Tag is Codeplug.Channel)
                 {
                     Console.WriteLine("Opening DataForm...");
                     var dataForm = new DataForm(selectedNode, systemNames, systemIds);
-                    var channelData = (ChannelData)selectedNode.Tag;
+                    var channelData = (Codeplug.Channel)selectedNode.Tag;
                     dataForm.SetTgid(channelData.Tgid);
                     dataForm.TopLevel = false;
                     dataForm.FormBorderStyle = FormBorderStyle.None;
@@ -175,25 +176,25 @@ namespace Whackerlink_CPS
 
         private void DataForm_ChannelUpdated(object sender, DataForm.ChannelUpdatedEventArgs e)
         {
-            var zone = _yamlRoot.Zones.FirstOrDefault(z => z.name == e.ZoneName);
+            var zone = _yamlRoot.Zones.FirstOrDefault(z => z.Name == e.ZoneName);
             if (zone != null)
             {
-                var channel = zone.channels.FirstOrDefault(c => c.name == e.OriginalChannelName);
+                var channel = zone.Channels.FirstOrDefault(c => c.Name == e.OriginalChannelName);
                 if (channel != null)
                 {
-                    channel.name = e.ChannelName;
-                    channel.system = e.SystemName;
-                    channel.tgid = e.Tgid;
+                    channel.Name = e.ChannelName;
+                    channel.System = e.SystemName;
+                    channel.Tgid = e.Tgid;
 
                     // Update the tree view node
-                    var zoneNode = treeView1.Nodes.Find(zone.name, true).FirstOrDefault();
+                    var zoneNode = treeView1.Nodes.Find(zone.Name, true).FirstOrDefault();
                     var channelNode = zoneNode?.Nodes.Find(e.OriginalChannelName, true).FirstOrDefault();
 
                     if (channelNode != null)
                     {
                         channelNode.Name = e.ChannelName;
                         channelNode.Text = e.ChannelName;
-                        channelNode.Tag = new ChannelData
+                        channelNode.Tag = new Codeplug.Channel
                         {
                             Name = e.ChannelName,
                             System = e.SystemName,
@@ -206,13 +207,13 @@ namespace Whackerlink_CPS
 
         private void SystemForm_SystemUpdated(object sender, SystemForm.SystemUpdateEventArgs e)
         {
-            var system = _yamlRoot.Systems.FirstOrDefault(s => s.name == e.OriginalSystemName);
+            var system = _yamlRoot.Systems.FirstOrDefault(s => s.Name == e.OriginalSystemName);
             if (system != null)
             {
-                system.name = e.SystemName;
-                system.address = e.Address;
-                system.port = e.Port;
-                system.rid = e.Rid;
+                system.Name = e.SystemName;
+                system.Address = e.Address;
+                system.Port = Int32.Parse(e.Port);
+                system.Rid = e.Rid;
 
                 // Update the tree view node
                 var systemNode = treeView1.Nodes.Find(e.OriginalSystemName, true).FirstOrDefault();
@@ -238,9 +239,9 @@ namespace Whackerlink_CPS
             ShowDataForm(selectedNode);
 
             // Save TGID in settings when a channel is selected
-            if (selectedNode.Parent != null && selectedNode.Parent.Parent != null && selectedNode.Parent.Parent.Text == "Zones" && selectedNode.Tag is ChannelData)
+            if (selectedNode.Parent != null && selectedNode.Parent.Parent != null && selectedNode.Parent.Parent.Text == "Zones" && selectedNode.Tag is Codeplug.Channel)
             {
-                var channelData = (ChannelData)selectedNode.Tag;
+                var channelData = (Codeplug.Channel)selectedNode.Tag;
                 Properties.Settings.Default.Tgid = channelData.Tgid;
                 Properties.Settings.Default.Save();
             }
@@ -260,7 +261,7 @@ namespace Whackerlink_CPS
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = "YAML files (*.yaml)|*.yaml|All files (*.*)|*.*";
+                openFileDialog.Filter = "WhackerLink Codeplug files (*.yml)|*.yml|All files (*.*)|*.*";
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string yamlContent = File.ReadAllText(openFileDialog.FileName);
@@ -305,37 +306,37 @@ namespace Whackerlink_CPS
                 {
                     var newZone = new Zone
                     {
-                        name = "New Zone",
-                        channels = new List<Channel>()
+                        Name = "New Zone",
+                        Channels = new List<Channel>()
                     };
                     _yamlRoot.Zones.Add(newZone);
 
-                    var zoneNode = new TreeNode(newZone.name)
+                    var zoneNode = new TreeNode(newZone.Name)
                     {
-                        Name = newZone.name
+                        Name = newZone.Name
                     };
                     treeView1.SelectedNode.Nodes.Add(zoneNode);
                     treeView1.SelectedNode.Expand();
                 }
                 else if (treeView1.SelectedNode.Parent != null && treeView1.SelectedNode.Parent.Text == "Zones")
                 {
-                    var selectedZone = _yamlRoot.Zones.Find(z => z.name == treeView1.SelectedNode.Text);
+                    var selectedZone = _yamlRoot.Zones.Find(z => z.Name == treeView1.SelectedNode.Text);
                     var newChannel = new Channel
                     {
-                        name = "New Channel",
-                        system = _yamlRoot.Systems[0].name,
-                        tgid = "1001"
+                        Name = "New Channel",
+                        System = _yamlRoot.Systems[0].Name,
+                        Tgid = "1001"
                     };
-                    selectedZone.channels.Add(newChannel);
+                    selectedZone.Channels.Add(newChannel);
 
-                    var channelNode = new TreeNode(newChannel.name)
+                    var channelNode = new TreeNode(newChannel.Name)
                     {
-                        Name = newChannel.name,
-                        Tag = new ChannelData
+                        Name = newChannel.Name,
+                        Tag = new Codeplug.Channel
                         {
-                            Name = newChannel.name,
-                            System = newChannel.system,
-                            Tgid = newChannel.tgid
+                            Name = newChannel.Name,
+                            System = newChannel.System,
+                            Tgid = newChannel.Tgid
                         }
                     };
                     treeView1.SelectedNode.Nodes.Add(channelNode);
@@ -352,10 +353,10 @@ namespace Whackerlink_CPS
                     };
                     _yamlRoot.Systems.Add(new Codeplug.System
                     {
-                        name = newSystemData.Name,
-                        address = newSystemData.Address,
-                        port = newSystemData.Port,
-                        rid = newSystemData.Rid
+                        Name = newSystemData.Name,
+                        Address = newSystemData.Address,
+                        Port = Int32.Parse(newSystemData.Port),
+                        Rid = newSystemData.Rid
                     });
 
                     var systemNode = new TreeNode(newSystemData.Name)
@@ -414,18 +415,18 @@ namespace Whackerlink_CPS
             if (treeView1.SelectedNode != null)
             {
                 // Deleting a channel
-                if (treeView1.SelectedNode.Parent != null && treeView1.SelectedNode.Parent.Parent != null && treeView1.SelectedNode.Parent.Parent.Text == "Zones" && treeView1.SelectedNode.Tag is ChannelData)
+                if (treeView1.SelectedNode.Parent != null && treeView1.SelectedNode.Parent.Parent != null && treeView1.SelectedNode.Parent.Parent.Text == "Zones" && treeView1.SelectedNode.Tag is Codeplug.Channel)
                 {
                     var zoneName = treeView1.SelectedNode.Parent.Text;
                     var channelName = treeView1.SelectedNode.Name;
-                    var zone = _yamlRoot.Zones.FirstOrDefault(z => z.name == zoneName);
+                    var zone = _yamlRoot.Zones.FirstOrDefault(z => z.Name == zoneName);
 
                     if (zone != null)
                     {
-                        var channel = zone.channels.FirstOrDefault(c => c.name == channelName);
+                        var channel = zone.Channels.FirstOrDefault(c => c.Name == channelName);
                         if (channel != null)
                         {
-                            zone.channels.Remove(channel);
+                            zone.Channels.Remove(channel);
                             treeView1.SelectedNode.Remove();
                         }
                     }
@@ -434,7 +435,7 @@ namespace Whackerlink_CPS
                 else if (treeView1.SelectedNode.Parent != null && treeView1.SelectedNode.Parent.Text == "Systems" && treeView1.SelectedNode.Tag is SystemData)
                 {
                     var systemName = treeView1.SelectedNode.Name;
-                    var system = _yamlRoot.Systems.FirstOrDefault(s => s.name == systemName);
+                    var system = _yamlRoot.Systems.FirstOrDefault(s => s.Name == systemName);
 
                     if (system != null)
                     {
@@ -446,7 +447,7 @@ namespace Whackerlink_CPS
                 else if (treeView1.SelectedNode.Parent != null && treeView1.SelectedNode.Parent.Text == "Zones")
                 {
                     var zoneName = treeView1.SelectedNode.Name;
-                    var zone = _yamlRoot.Zones.FirstOrDefault(z => z.name == zoneName);
+                    var zone = _yamlRoot.Zones.FirstOrDefault(z => z.Name == zoneName);
 
                     if (zone != null)
                     {
@@ -458,7 +459,7 @@ namespace Whackerlink_CPS
                 else if (treeView1.SelectedNode.Text == "Zones" && treeView1.SelectedNode.Nodes.Count > 0)
                 {
                     var zoneName = treeView1.SelectedNode.Nodes[0].Name;
-                    var zone = _yamlRoot.Zones.FirstOrDefault(z => z.name == zoneName);
+                    var zone = _yamlRoot.Zones.FirstOrDefault(z => z.Name == zoneName);
 
                     if (zone != null)
                     {
@@ -470,7 +471,7 @@ namespace Whackerlink_CPS
                 else if (treeView1.SelectedNode.Text == "Systems" && treeView1.SelectedNode.Nodes.Count > 0)
                 {
                     var systemName = treeView1.SelectedNode.Nodes[0].Name;
-                    var system = _yamlRoot.Systems.FirstOrDefault(s => s.name == systemName);
+                    var system = _yamlRoot.Systems.FirstOrDefault(s => s.Name == systemName);
 
                     if (system != null)
                     {
