@@ -82,10 +82,5 @@ namespace Whackerlink_CPS
 
             public Channel() { }
         }
-
-        public class Site
-        {
-            public Site() { }
-        }
     }
 }

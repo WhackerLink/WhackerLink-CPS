@@ -114,11 +114,11 @@ namespace Whackerlink_CPS
                 TreeNode systemNode = new TreeNode(systemData.Name)
                 {
                     Name = systemData.Name,
-                    Tag = new SystemData
+                    Tag = new Codeplug.System
                     {
                         Name = systemData.Name,
                         Address = systemData.Address,
-                        Port = systemData.Port.ToString(),
+                        Port = systemData.Port,
                         Rid = systemData.Rid
                     }
                 };
@@ -176,7 +176,7 @@ namespace Whackerlink_CPS
                     dataForm.ChannelUpdated += DataForm_ChannelUpdated;
                     dataForm.Show();
                 }
-                else if (selectedNode.Parent.Text == "Systems" && selectedNode.Tag is SystemData)
+                else if (selectedNode.Parent.Text == "Systems" && selectedNode.Tag is Codeplug.System)
                 {
                     Console.WriteLine("Opening SystemForm...");
                     var systemForm = new SystemForm(selectedNode, systemNames, systemIds);
@@ -243,11 +243,11 @@ namespace Whackerlink_CPS
                 {
                     systemNode.Name = e.SystemName;
                     systemNode.Text = e.SystemName;
-                    systemNode.Tag = new SystemData
+                    systemNode.Tag = new Codeplug.System
                     {
                         Name = e.SystemName,
                         Address = e.Address,
-                        Port = e.Port,
+                        Port = Int32.Parse(e.Port),
                         Rid = e.Rid
                     };
                 }
@@ -365,18 +365,18 @@ namespace Whackerlink_CPS
                 }
                 else if (treeView1.SelectedNode.Text == "Systems")
                 {
-                    var newSystemData = new SystemData
+                    var newSystemData = new Codeplug.System
                     {
                         Name = "System",
                         Address = "127.0.0.1",
-                        Port = "3009",
+                        Port = 3000,
                         Rid = "123456"
                     };
                     _yamlRoot.Systems.Add(new Codeplug.System
                     {
                         Name = newSystemData.Name,
                         Address = newSystemData.Address,
-                        Port = Int32.Parse(newSystemData.Port),
+                        Port = newSystemData.Port,
                         Rid = newSystemData.Rid
                     });
 
@@ -453,7 +453,7 @@ namespace Whackerlink_CPS
                     }
                 }
                 // Deleting a system
-                else if (treeView1.SelectedNode.Parent != null && treeView1.SelectedNode.Parent.Text == "Systems" && treeView1.SelectedNode.Tag is SystemData)
+                else if (treeView1.SelectedNode.Parent != null && treeView1.SelectedNode.Parent.Text == "Systems" && treeView1.SelectedNode.Tag is Codeplug.System)
                 {
                     var systemName = treeView1.SelectedNode.Name;
                     var system = _yamlRoot.Systems.FirstOrDefault(s => s.Name == systemName);

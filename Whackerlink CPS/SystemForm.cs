@@ -15,6 +15,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 * 
 * Copyright (C) 2024 Hanna Johnson (Elleran)
+* Copyright (C) 2024 Caleb, K4PHP
 * 
 */
 
@@ -48,24 +49,24 @@ namespace Whackerlink_CPS
 
         private void LoadData()
         {
-            if (_selectedNode.Tag is SystemData systemData)
+            if (_selectedNode.Tag is Codeplug.System systemData)
             {
                 txtName.Text = systemData.Name;
                 txtAddress.Text = systemData.Address;
-                txtPort.Text = systemData.Port;
+                txtPort.Text = systemData.Port.ToString();
                 txtRid.Text = systemData.Rid;
             }
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (_selectedNode.Tag is SystemData systemData)
+            if (_selectedNode.Tag is Codeplug.System systemData)
             {
                 var originalSystemName = systemData.Name;
 
                 systemData.Name = txtName.Text;
                 systemData.Address = txtAddress.Text;
-                systemData.Port = txtPort.Text;
+                systemData.Port = Int32.Parse(txtPort.Text);
                 systemData.Rid = txtRid.Text;
 
                 SystemUpdated?.Invoke(this, new SystemUpdateEventArgs
@@ -73,7 +74,7 @@ namespace Whackerlink_CPS
                     OriginalSystemName = originalSystemName,
                     SystemName = systemData.Name,
                     Address = systemData.Address,
-                    Port = systemData.Port,
+                    Port = systemData.Port.ToString(),
                     Rid = systemData.Rid
                 });
 
@@ -90,14 +91,11 @@ namespace Whackerlink_CPS
             public string Port { get; set; }
             public string Rid { get; set; }
         }
-    }
-    public class SystemData
-    {
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string Port { get; set; }
-        public string Rid { get; set; } 
 
+        private void txtRid_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
     
