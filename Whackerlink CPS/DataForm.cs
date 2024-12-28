@@ -20,12 +20,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Windows.Forms;
+using Krypton.Toolkit;
 
 namespace Whackerlink_CPS
 {
-
-
     public partial class DataForm : Form
     {
         public event EventHandler<ChannelUpdatedEventArgs> ChannelUpdated;
@@ -41,43 +41,86 @@ namespace Whackerlink_CPS
             _systemIds = systemIds;
             LoadSystems();
             LoadNodeData();
+            EncryptionType.Items.Add("None");
+            EncryptionType.Items.Add("AES-256");
+            EncryptionType.SelectedIndex = 0; 
+            EncryptionType.SelectedIndexChanged += EncryptionType_SelectedIndexChanged;
+            EncryptionMode.Items.Add("Strapped");
+            EncryptionMode.Items.Add("Selectable");
+            EncryptionMode.SelectedIndex = 0; 
+            EncryptionMode.SelectedIndexChanged += EncryptionType_SelectedIndexChanged;
+
+
+
+            EncryptionKey.Enabled = false;
+            btnGen.Enabled = false;
+            kryptonCheckBox1.Enabled = false;
+
+
+
+            EncryptionKey.UseSystemPasswordChar = true;
         }
 
         private void LoadSystems()
         {
             cmbSystems.DataSource = _systems;
-            // You might want to use _systemIds for another control or logic
         }
+
         public void SetTgid(string tgid)
         {
             txtTgid.Text = tgid;
         }
+  
+
+
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             if (_selectedNode != null)
             {
                 string originalChannelName = _selectedNode.Text;
 
+                
                 _selectedNode.Text = txtName.Text;
+
+                
                 var channelData = _selectedNode.Tag as Codeplug.Channel ?? new Codeplug.Channel();
-                channelData.System = cmbSystems.SelectedItem.ToString();
+
+                
+                channelData.Name = txtName.Text;
+                channelData.System = cmbSystems.SelectedItem?.ToString() ?? string.Empty;
                 channelData.Tgid = txtTgid.Text;
+                channelData.EncryptionKey = EncryptionKey.Text;
+                channelData.EncryptionMode = EncryptionMode.SelectedItem?.ToString() ?? string.Empty;
+                channelData.EncryptionType = EncryptionType.SelectedItem?.ToString() ?? string.Empty;
 
+                
                 _selectedNode.Tag = channelData;
-                _selectedNode.Parent.Text = txtZoneName.Text;
 
+                
+                if (_selectedNode.Parent != null)
+                {
+                    txtZoneName.Text = _selectedNode.Parent.Text;
+                }
+
+                
                 ChannelUpdated?.Invoke(this, new ChannelUpdatedEventArgs
                 {
                     OriginalChannelName = originalChannelName,
-                    ChannelName = txtName.Text,
+                    ChannelName = channelData.Name,
                     SystemName = channelData.System,
                     Tgid = channelData.Tgid,
-                    ZoneName = txtZoneName.Text
+                    ZoneName = txtZoneName.Text,
+                    EncryptionMode = channelData.EncryptionMode,
+                    EncryptionType = channelData.EncryptionType,
+                    EncryptionKey = channelData.EncryptionKey,
                 });
 
+                
                 this.DialogResult = DialogResult.OK;
             }
         }
+
+
         private void LoadNodeData()
         {
             if (_selectedNode != null)
@@ -86,6 +129,7 @@ namespace Whackerlink_CPS
                 if (_selectedNode.Tag is Codeplug.Channel channelData)
                 {
                     cmbSystems.SelectedItem = channelData.System;
+                    
                 }
                 txtTgid.Text = Properties.Settings.Default.Tgid;
                 if (_selectedNode.Parent != null)
@@ -94,10 +138,13 @@ namespace Whackerlink_CPS
                 }
             }
         }
+
         public void InvokeUpdateButton()
         {
             btnUpdate.PerformClick();
+
         }
+
         public class ChannelUpdatedEventArgs : EventArgs
         {
             public string OriginalChannelName { get; set; }
@@ -105,9 +152,106 @@ namespace Whackerlink_CPS
             public string SystemName { get; set; }
             public string Tgid { get; set; }
             public string ZoneName { get; set; }
+            public string EncryptionMode { get; set; }
+            public string EncryptionType { get; set; }
+            public string EncryptionKey { get; set; }
         }
 
         private void DataForm_Load(object sender, EventArgs e)
+        {
+        }
+
+        private void btnGen_Click(object sender, EventArgs e)
+        {
+            
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                byte[] key = new byte[32]; 
+                rng.GetBytes(key);
+
+                
+                EncryptionKey.Text = BitConverter.ToString(key).Replace("-", "");
+            }
+        }
+
+        private void EncryptionKey_TextChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("AES-256 Key Updated: " + EncryptionKey.Text);
+        }
+
+        private void kryptonCheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            EncryptionKey.UseSystemPasswordChar = !kryptonCheckBox1.Checked;
+        }
+
+     
+      
+
+        private void cmbSystems_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbSystems.SelectedItem != null)
+            {
+                string selectedSystem = cmbSystems.SelectedItem.ToString();
+                Console.WriteLine("Selected System: " + selectedSystem);
+            }
+        }
+
+        private void kryptonLabel1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void kryptonLabel3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtTgid_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void EncryptionType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (EncryptionType.SelectedItem != null)
+            {
+                string selectedOption = EncryptionType.SelectedItem.ToString();
+
+                if (selectedOption == "None")
+                {
+                    EncryptionKey.Text = string.Empty;
+                    EncryptionKey.Enabled = false;
+                    btnGen.Enabled = false;
+                    kryptonCheckBox1.Enabled = false;
+                    EncryptionMode.Enabled = false;
+                    EncryptionMode.Items.Add("Clear");
+                    EncryptionMode.SelectedItem = "Clear";
+                   
+                }
+                else if (selectedOption == "AES-256")
+                {
+                    EncryptionKey.Enabled = true;
+                    btnGen.Enabled = true;
+                    kryptonCheckBox1.Enabled = true;
+                    EncryptionMode.Enabled = true;
+                    EncryptionMode.Items.Remove("Clear");
+                    EncryptionMode.SelectedItem = "Strapped";
+
+
+
+
+
+                }
+            }
+        }
+
+
+        private void kryptonRichTextBox1_TextChanged(object sender, EventArgs e)
         {
 
         }

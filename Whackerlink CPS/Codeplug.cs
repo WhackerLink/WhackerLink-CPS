@@ -79,6 +79,9 @@ namespace Whackerlink_CPS
             public string Name { get; set; }
             public string System { get; set; }
             public string Tgid { get; set; }
+            public string EncryptionMode { get; set; }
+            public string EncryptionType { get; set; } 
+            public string EncryptionKey { get; set; } 
 
             public Channel() { }
         }
