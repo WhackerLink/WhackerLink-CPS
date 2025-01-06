@@ -85,10 +85,10 @@
             this.kryptonRibbonTab1,
             this.kryptonRibbonTab2,
             this.kryptonRibbonTab3});
-            this.kryptonRibbon1.SelectedContext = null;
             this.kryptonRibbon1.SelectedTab = this.kryptonRibbonTab1;
-            this.kryptonRibbon1.Size = new System.Drawing.Size(2002, 259);
+            this.kryptonRibbon1.Size = new System.Drawing.Size(1001, 143);
             this.kryptonRibbon1.TabIndex = 0;
+            this.kryptonRibbon1.SelectedTabChanged += new System.EventHandler(this.kryptonRibbon1_SelectedTabChanged);
             // 
             // QATRead
             // 
@@ -282,35 +282,40 @@
             // 
             this.kryptonPanel1.Controls.Add(this.treeView1);
             this.kryptonPanel1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.kryptonPanel1.Location = new System.Drawing.Point(0, 259);
+            this.kryptonPanel1.Location = new System.Drawing.Point(0, 143);
+            this.kryptonPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.kryptonPanel1.Name = "kryptonPanel1";
-            this.kryptonPanel1.Size = new System.Drawing.Size(464, 679);
+            this.kryptonPanel1.Size = new System.Drawing.Size(232, 345);
             this.kryptonPanel1.TabIndex = 1;
             // 
             // treeView1
             // 
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
+            this.treeView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(464, 679);
+            this.treeView1.Padding = new System.Windows.Forms.Padding(0, 1, 0, 1);
+            this.treeView1.Size = new System.Drawing.Size(232, 345);
             this.treeView1.TabIndex = 0;
             // 
             // panel2
             // 
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(464, 259);
+            this.panel2.Location = new System.Drawing.Point(232, 143);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1538, 679);
+            this.panel2.Size = new System.Drawing.Size(769, 345);
             this.panel2.TabIndex = 2;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2002, 938);
+            this.ClientSize = new System.Drawing.Size(1001, 488);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.kryptonPanel1);
             this.Controls.Add(this.kryptonRibbon1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

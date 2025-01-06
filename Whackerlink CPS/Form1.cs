@@ -38,6 +38,7 @@ namespace Whackerlink_CPS
         public Form1()
         {
             InitializeComponent();
+            Icon = Resources.whackerlink1;
             treeView1.AfterSelect += TreeView1_AfterSelect;
             KryptonCodeplugFileSave.Enabled = false; // Initially disable the save button
             QATSave.Enabled = false; // Initially disable the save button
@@ -69,7 +70,6 @@ namespace Whackerlink_CPS
                 case "SilverLight":
                     th.krypton2007SilverLight();
                     break;
-
                 default:
                     break;
             }
@@ -576,6 +576,11 @@ namespace Whackerlink_CPS
         {
             HelpForm help = new HelpForm();
             help.ShowDialog();
+        }
+
+        private void kryptonRibbon1_SelectedTabChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
