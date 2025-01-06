@@ -58,16 +58,24 @@ namespace Whackerlink_CPS
                 txtPort.Text = systemData.Port.ToString();
                 txtRid.Text = systemData.Rid;
 
-                SetupSiteGridView();
-                sites.Clear();
+                if (Form1.SelectedCodeplug.RadioWide.BaseMode == ModelMode.CONSOLE || Form1.SelectedCodeplug.RadioWide.BaseMode == ModelMode.DESKTOPRADIO)
+                {
+                    sitesView.Visible = true;
 
-                if (systemData.Site != null)
+                    SetupSiteGridView();
+                    sites.Clear();
+
+                    if (systemData.Site != null)
+                    {
+                        sites.Add(systemData.Site);
+                    }
+                    else
+                    {
+                        MessageBox.Show("The site data is missing or null.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                } else
                 {
-                    sites.Add(systemData.Site);
-                }
-                else
-                {
-                    MessageBox.Show("The site data is missing or null.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    sitesView.Visible = false;
                 }
             }
         }
@@ -96,6 +104,7 @@ namespace Whackerlink_CPS
                 _selectedNode.Text = systemData.Name;
             }
         }
+
         private void SetupSiteGridView()
         {
             var dataGridView = sitesView;

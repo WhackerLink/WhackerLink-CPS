@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using Whackerlink_CPS.Properties;
 using YamlDotNet.Serialization;
@@ -33,6 +34,8 @@ namespace Whackerlink_CPS
 {
     public partial class Form1 : Form
     {
+        public static Codeplug SelectedCodeplug { get; set; }
+
         private Codeplug _yamlRoot;
 
         public Form1()
@@ -95,6 +98,8 @@ namespace Whackerlink_CPS
                 .Build();
 
             _yamlRoot = deserializer.Deserialize<Codeplug>(yamlContent);
+
+            SelectedCodeplug = _yamlRoot;
 
             treeView1.Nodes.Clear();
 
@@ -307,16 +312,23 @@ namespace Whackerlink_CPS
                 return;
             }
 
+            _yamlRoot.RadioWide.CodeplugVersion = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "R01.00.00";
+
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-                saveFileDialog.Filter = "YAML files (*.yaml)|*.yaml|All files (*.*)|*.*";
+                saveFileDialog.Filter = "Codeplug files (*.yml)|*.yml|All files (*.*)|*.*";
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     var serializer = new SerializerBuilder()
                         .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                        .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull)
+                        .WithIndentedSequences()
                         .Build();
+
                     string yamlContent = serializer.Serialize(_yamlRoot);
+
                     File.WriteAllText(saveFileDialog.FileName, yamlContent);
+
                     MessageBox.Show("File saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }

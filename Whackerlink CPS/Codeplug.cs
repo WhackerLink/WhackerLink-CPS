@@ -33,6 +33,7 @@ namespace Whackerlink_CPS
         {
             public string HostVersion { get; set; }
             public string CodeplugVersion { get; set; }
+            public ModelMode BaseMode { get; set; } = ModelMode.FIVEMRADIO;
             public string RadioAlias { get; set; }
             public string SerialNumber { get; set; }
             public string Model { get; set; }
