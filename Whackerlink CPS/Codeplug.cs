@@ -28,7 +28,7 @@ namespace Whackerlink_CPS
         public RadioEgroConfiguration ErgonomicsWide { get; set; }
         public List<System> Systems { get; set; } = new List<System>();
         public List<Zone> Zones { get; set; } = new List<Zone>();
-        public List<ScanList> scanLists { get; set; }
+        public List<ScanList> scanList { get; set; }
 
         public class RadioWideConfiguration
         {
