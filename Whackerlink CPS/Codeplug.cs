@@ -14,7 +14,7 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 * 
-* Copyright (C) 2024 Caleb, K4PHP
+* Copyright (C) 2024-2025 Caleb, K4PHP
 * 
 */
 
@@ -28,7 +28,7 @@ namespace Whackerlink_CPS
         public RadioEgroConfiguration ErgonomicsWide { get; set; }
         public List<System> Systems { get; set; } = new List<System>();
         public List<Zone> Zones { get; set; } = new List<Zone>();
-        public List<ScanList> scanList { get; set; }
+        public List<ScanList> scanLists { get; set; }
 
         public class RadioWideConfiguration
         {
@@ -56,8 +56,8 @@ namespace Whackerlink_CPS
         {
             public string Name { get; set; }
             public string Address { get; set; }
-            public int Port { get; set; }
             public string Rid { get; set; }
+            public int Port { get; set; }
             public Site Site { get; set; }
 
             public System() { }
@@ -81,6 +81,7 @@ namespace Whackerlink_CPS
             public string Name { get; set; }
             public string System { get; set; }
             public string Tgid { get; set; }
+            public string ScanList { get; set; }
 
             public Channel() { }
         }

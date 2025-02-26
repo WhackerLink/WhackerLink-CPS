@@ -90,16 +90,25 @@ namespace Whackerlink_CPS
             hf.Show();
         }
 
-        private void LoadYamlIntoTreeView(string yamlContent)
+        internal void LoadYamlIntoTreeView(string yamlContent = null, Codeplug codeplug = null)
         {
-            var deserializer = new DeserializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                .IgnoreUnmatchedProperties()
-                .Build();
+            if (yamlContent != null)
+            {
+                var deserializer = new DeserializerBuilder()
+                    .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                    .IgnoreUnmatchedProperties()
+                    .Build();
 
-            _yamlRoot = deserializer.Deserialize<Codeplug>(yamlContent);
+                _yamlRoot = deserializer.Deserialize<Codeplug>(yamlContent);
 
-            SelectedCodeplug = _yamlRoot;
+                SelectedCodeplug = _yamlRoot;
+            }
+
+            if (codeplug != null)
+            {
+                SelectedCodeplug = codeplug;
+                _yamlRoot = codeplug;
+            }
 
             treeView1.Nodes.Clear();
 
@@ -149,7 +158,8 @@ namespace Whackerlink_CPS
                         {
                             Name = channel.Name,
                             System = channel.System,
-                            Tgid = channel.Tgid.ToString()
+                            Tgid = channel.Tgid.ToString(),
+                            
                         }
                     };
                     zoneNode.Nodes.Add(channelNode);
@@ -157,6 +167,22 @@ namespace Whackerlink_CPS
                 zonesNode.Nodes.Add(zoneNode);
             }
             treeView1.Nodes.Add(zonesNode);
+
+            if (_yamlRoot.scanLists != null)
+            {
+                // Scan lists
+                TreeNode scanListsNode = new TreeNode("Scan Lists");
+                foreach (var scanList in _yamlRoot.scanLists)
+                {
+                    TreeNode scanListNode = new TreeNode(scanList.Name)
+                    {
+                        Name = scanList.Name,
+                        Tag = scanList
+                    };
+                    scanListsNode.Nodes.Add(scanListNode);
+                }
+                treeView1.Nodes.Add(scanListsNode);
+            }
 
             treeView1.ExpandAll();
         }
@@ -194,12 +220,56 @@ namespace Whackerlink_CPS
                     systemForm.SystemUpdated += SystemForm_SystemUpdated;
                     systemForm.Show();
                 }
+                else if (selectedNode.Parent.Text == "Scan Lists" && selectedNode.Tag is Codeplug.ScanList scanList)
+                {
+                    Console.WriteLine("Opening ScanListForm...");
+                    var scanListForm = new ScanListForm(scanList);
+                    scanListForm.TopLevel = false;
+                    scanListForm.FormBorderStyle = FormBorderStyle.None;
+                    scanListForm.Dock = DockStyle.Fill;
+
+                    // Subscribe to event BEFORE adding to the panel
+                    scanListForm.ScanListUpdated += (sender, e) =>
+                    {
+                        if (InvokeRequired)
+                        {
+                            Invoke(new Action(() => ScanListForm_ScanListUpdated(sender, e)));
+                        }
+                        else
+                        {
+                            ScanListForm_ScanListUpdated(sender, e);
+                        }
+                    };
+
+                    panel2.Controls.Clear();
+                    panel2.Controls.Add(scanListForm);
+                    scanListForm.Show();
+                }
+
                 else
                 {
                     Console.WriteLine("No matching form to open.");
                 }
             }
         }
+
+        private void ScanListForm_ScanListUpdated(object sender, ScanListForm.ScanListUpdatedEventArgs e)
+        {
+            var scanList = _yamlRoot.scanLists.FirstOrDefault(s => s.Name == e.ScanListName);
+            if (scanList != null)
+            {
+                scanList.Channels = e.Channels;
+
+                // Update the tree view node
+                var scanListNode = treeView1.Nodes.Find(e.ScanListName, true).FirstOrDefault();
+                if (scanListNode != null)
+                {
+                    scanListNode.Text = e.ScanListName;
+                    scanListNode.Tag = scanList;
+                }
+            }
+        }
+
 
         private void DataForm_ChannelUpdated(object sender, DataForm.ChannelUpdatedEventArgs e)
         {
@@ -593,6 +663,13 @@ namespace Whackerlink_CPS
         private void kryptonRibbon1_SelectedTabChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void createCodeplugBtn_Click(object sender, EventArgs e)
+        {
+            CreateCodeplugForm createForm = new CreateCodeplugForm(this);
+
+            createForm.ShowDialog();
         }
     }
 }

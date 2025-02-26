@@ -38,7 +38,7 @@
             this.kryptonRibbonGroupTriple1 = new Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.RibbonCodeplugFileRead = new Krypton.Ribbon.KryptonRibbonGroupButton();
             this.KryptonCodeplugFileSave = new Krypton.Ribbon.KryptonRibbonGroupButton();
-            this.kryptonRibbonGroupButton3 = new Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.createCodeplugBtn = new Krypton.Ribbon.KryptonRibbonGroupButton();
             this.kryptonRibbonGroup2 = new Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple2 = new Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.RibbonCodeplugNodeAdd = new Krypton.Ribbon.KryptonRibbonGroupButton();
@@ -85,6 +85,7 @@
             this.kryptonRibbonTab1,
             this.kryptonRibbonTab2,
             this.kryptonRibbonTab3});
+            this.kryptonRibbon1.SelectedContext = null;
             this.kryptonRibbon1.SelectedTab = this.kryptonRibbonTab1;
             this.kryptonRibbon1.Size = new System.Drawing.Size(1001, 143);
             this.kryptonRibbon1.TabIndex = 0;
@@ -128,7 +129,7 @@
             this.kryptonRibbonGroupTriple1.Items.AddRange(new Krypton.Ribbon.KryptonRibbonGroupItem[] {
             this.RibbonCodeplugFileRead,
             this.KryptonCodeplugFileSave,
-            this.kryptonRibbonGroupButton3});
+            this.createCodeplugBtn});
             // 
             // RibbonCodeplugFileRead
             // 
@@ -144,9 +145,13 @@
             this.KryptonCodeplugFileSave.TextLine2 = "Codeplug";
             this.KryptonCodeplugFileSave.Click += new System.EventHandler(this.KryptonCodeplugFileSave_Click);
             // 
-            // kryptonRibbonGroupButton3
+            // createCodeplugBtn
             // 
-            this.kryptonRibbonGroupButton3.Visible = false;
+            this.createCodeplugBtn.ImageLarge = global::Whackerlink_CPS.Properties.Resources.Add;
+            this.createCodeplugBtn.ImageSmall = global::Whackerlink_CPS.Properties.Resources.Add;
+            this.createCodeplugBtn.TextLine1 = "Create";
+            this.createCodeplugBtn.TextLine2 = "Codeplug";
+            this.createCodeplugBtn.Click += new System.EventHandler(this.createCodeplugBtn_Click);
             // 
             // kryptonRibbonGroup2
             // 
@@ -283,7 +288,7 @@
             this.kryptonPanel1.Controls.Add(this.treeView1);
             this.kryptonPanel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.kryptonPanel1.Location = new System.Drawing.Point(0, 143);
-            this.kryptonPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.kryptonPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.kryptonPanel1.Name = "kryptonPanel1";
             this.kryptonPanel1.Size = new System.Drawing.Size(232, 345);
             this.kryptonPanel1.TabIndex = 1;
@@ -292,7 +297,7 @@
             // 
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.treeView1.Margin = new System.Windows.Forms.Padding(2);
             this.treeView1.Name = "treeView1";
             this.treeView1.Padding = new System.Windows.Forms.Padding(0, 1, 0, 1);
             this.treeView1.Size = new System.Drawing.Size(232, 345);
@@ -302,7 +307,7 @@
             // 
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(232, 143);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(769, 345);
             this.panel2.TabIndex = 2;
@@ -315,7 +320,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.kryptonPanel1);
             this.Controls.Add(this.kryptonRibbon1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -339,7 +344,7 @@
         private Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple1;
         private Krypton.Ribbon.KryptonRibbonGroupButton RibbonCodeplugFileRead;
         private Krypton.Ribbon.KryptonRibbonGroupButton KryptonCodeplugFileSave;
-        private Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton3;
+        private Krypton.Ribbon.KryptonRibbonGroupButton createCodeplugBtn;
         private Krypton.Ribbon.KryptonRibbonGroup kryptonRibbonGroup2;
         private Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple2;
         private Krypton.Ribbon.KryptonRibbonGroupButton RibbonCodeplugNodeAdd;

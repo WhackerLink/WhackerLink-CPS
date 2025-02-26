@@ -66,6 +66,12 @@
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
     <Compile Include="Codeplug.cs" />
+    <Compile Include="CreateCodeplugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateCodeplugForm.Designer.cs">
+      <DependentUpon>CreateCodeplugForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,12 @@
     <Compile Include="RadioWideForm.Designer.cs">
       <DependentUpon>RadioWideForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScanListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScanListForm.Designer.cs">
+      <DependentUpon>ScanListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Site.cs" />
     <Compile Include="SystemForm.cs">
       <SubType>Form</SubType>
@@ -109,6 +121,9 @@
     </Compile>
     <EmbeddedResource Include="AboutBox1.resx">
       <DependentUpon>AboutBox1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateCodeplugForm.resx">
+      <DependentUpon>CreateCodeplugForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataForm.resx">
       <DependentUpon>DataForm.cs</DependentUpon>
@@ -134,6 +149,9 @@
     </Compile>
     <EmbeddedResource Include="RadioWideForm.resx">
       <DependentUpon>RadioWideForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScanListForm.resx">
+      <DependentUpon>ScanListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SystemForm.resx">
       <DependentUpon>SystemForm.cs</DependentUpon>
