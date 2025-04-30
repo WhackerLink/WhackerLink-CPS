@@ -49,7 +49,7 @@ namespace Whackerlink_CPS
                 Channels = scanChannels
             };
 
-            codeplug.scanLists = new List<Codeplug.ScanList>();            
+            codeplug.ScanLists = new List<Codeplug.ScanList>();            
 
             // create default zones
             List<Codeplug.Zone> zones = new List<Codeplug.Zone>();
@@ -82,7 +82,7 @@ namespace Whackerlink_CPS
 
             codeplug.Systems = systems;
             codeplug.Zones = zones;
-            codeplug.scanLists.Add(scanList);
+            codeplug.ScanLists.Add(scanList);
 
             form1.LoadYamlIntoTreeView(null, codeplug);
 

@@ -134,6 +134,7 @@ namespace Whackerlink_CPS
                         Address = systemData.Address,
                         Port = systemData.Port,
                         Rid = systemData.Rid,
+                        AuthKey = systemData.AuthKey,
                         Site = systemData.Site
                     }
                 };
@@ -159,7 +160,7 @@ namespace Whackerlink_CPS
                             Name = channel.Name,
                             System = channel.System,
                             Tgid = channel.Tgid.ToString(),
-                            
+                            ScanList = channel.ScanList
                         }
                     };
                     zoneNode.Nodes.Add(channelNode);
@@ -168,11 +169,11 @@ namespace Whackerlink_CPS
             }
             treeView1.Nodes.Add(zonesNode);
 
-            if (_yamlRoot.scanLists != null)
+            if (_yamlRoot.ScanLists != null)
             {
                 // Scan lists
                 TreeNode scanListsNode = new TreeNode("Scan Lists");
-                foreach (var scanList in _yamlRoot.scanLists)
+                foreach (var scanList in _yamlRoot.ScanLists)
                 {
                     TreeNode scanListNode = new TreeNode(scanList.Name)
                     {
@@ -191,13 +192,14 @@ namespace Whackerlink_CPS
         {
             var systemNames = _yamlRoot.Systems.Select(s => s.Name).ToList();
             var systemIds = _yamlRoot.Systems.Select(s => s.Rid).ToList();
+            List<string> scanLists = _yamlRoot.ScanLists.Select(s => s.Name).ToList();
 
             if (selectedNode.Parent != null)
             {
                 if (selectedNode.Parent.Parent != null && selectedNode.Parent.Parent.Text == "Zones" && selectedNode.Tag is Codeplug.Channel)
                 {
                     Console.WriteLine("Opening DataForm...");
-                    var dataForm = new DataForm(selectedNode, systemNames, systemIds);
+                    var dataForm = new DataForm(selectedNode, systemNames, systemIds, scanLists);
                     var channelData = (Codeplug.Channel)selectedNode.Tag;
                     dataForm.SetTgid(channelData.Tgid);
                     dataForm.TopLevel = false;
@@ -255,7 +257,7 @@ namespace Whackerlink_CPS
 
         private void ScanListForm_ScanListUpdated(object sender, ScanListForm.ScanListUpdatedEventArgs e)
         {
-            var scanList = _yamlRoot.scanLists.FirstOrDefault(s => s.Name == e.ScanListName);
+            var scanList = _yamlRoot.ScanLists.FirstOrDefault(s => s.Name == e.ScanListName);
             if (scanList != null)
             {
                 scanList.Channels = e.Channels;
@@ -282,6 +284,7 @@ namespace Whackerlink_CPS
                     channel.Name = e.ChannelName;
                     channel.System = e.SystemName;
                     channel.Tgid = e.Tgid;
+                    channel.ScanList = e.ScanList;
 
                     // Update the tree view node
                     var zoneNode = treeView1.Nodes.Find(zone.Name, true).FirstOrDefault();
@@ -295,6 +298,7 @@ namespace Whackerlink_CPS
                         {
                             Name = e.ChannelName,
                             System = e.SystemName,
+                            ScanList = e.ScanList,
                             Tgid = e.Tgid
                         };
                     }
@@ -311,6 +315,7 @@ namespace Whackerlink_CPS
                 system.Address = e.Address;
                 system.Port = Int32.Parse(e.Port);
                 system.Rid = e.Rid;
+                system.AuthKey = e.AuthKey;
                 system.Site = e.Site;
 
                 // Update the tree view node
@@ -326,6 +331,7 @@ namespace Whackerlink_CPS
                         Address = e.Address,
                         Port = Int32.Parse(e.Port),
                         Rid = e.Rid,
+                        AuthKey = e.AuthKey,
                         Site = e.Site
                     };
                 }

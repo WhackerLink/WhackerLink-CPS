@@ -15,7 +15,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 * 
 * Copyright (C) 2024 Hanna Johnson (Elleran)
-* Copyright (C) 2024 Caleb, K4PHP
+* Copyright (C) 2024-2025 Caleb, K4PHP
 * 
 */
 
@@ -57,6 +57,7 @@ namespace Whackerlink_CPS
                 txtAddress.Text = systemData.Address;
                 txtPort.Text = systemData.Port.ToString();
                 txtRid.Text = systemData.Rid;
+                txtAuthKey.Text = systemData.AuthKey;
 
                 if (Form1.SelectedCodeplug.RadioWide.BaseMode == ModelMode.CONSOLE || Form1.SelectedCodeplug.RadioWide.BaseMode == ModelMode.DESKTOPRADIO)
                 {
@@ -90,6 +91,7 @@ namespace Whackerlink_CPS
                 systemData.Address = txtAddress.Text;
                 systemData.Port = Int32.Parse(txtPort.Text);
                 systemData.Rid = txtRid.Text;
+                systemData.AuthKey = txtAuthKey.Text;
 
                 SystemUpdated?.Invoke(this, new SystemUpdateEventArgs
                 {
@@ -98,6 +100,7 @@ namespace Whackerlink_CPS
                     Address = systemData.Address,
                     Port = systemData.Port.ToString(),
                     Rid = systemData.Rid,
+                    AuthKey = systemData.AuthKey,
                     Site = systemData.Site
                 });
 
@@ -180,6 +183,7 @@ namespace Whackerlink_CPS
             public string Address { get; set; }
             public string Port { get; set; }
             public string Rid { get; set; }
+            public string AuthKey { get; set; }
             public Site Site { get; set; }
         }
 
@@ -189,6 +193,11 @@ namespace Whackerlink_CPS
         }
 
         private void kryptonLabel4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SystemForm_Load(object sender, EventArgs e)
         {
 
         }

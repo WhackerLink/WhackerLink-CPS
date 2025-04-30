@@ -38,6 +38,8 @@
             this.txtRid = new Krypton.Toolkit.KryptonTextBox();
             this.btnUpdate = new Krypton.Toolkit.KryptonButton();
             this.sitesView = new Krypton.Toolkit.KryptonDataGridView();
+            this.kryptonLabel5 = new Krypton.Toolkit.KryptonLabel();
+            this.txtAuthKey = new Krypton.Toolkit.KryptonTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.sitesView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,7 +48,7 @@
             this.txtName.Location = new System.Drawing.Point(94, 49);
             this.txtName.Margin = new System.Windows.Forms.Padding(2);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(106, 23);
+            this.txtName.Size = new System.Drawing.Size(134, 23);
             this.txtName.TabIndex = 0;
             this.txtName.Text = "kryptonTextBox1";
             // 
@@ -73,7 +75,7 @@
             this.txtAddress.Location = new System.Drawing.Point(94, 80);
             this.txtAddress.Margin = new System.Windows.Forms.Padding(2);
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(106, 23);
+            this.txtAddress.Size = new System.Drawing.Size(243, 23);
             this.txtAddress.TabIndex = 1;
             this.txtAddress.Text = "kryptonTextBox1";
             // 
@@ -117,7 +119,7 @@
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(299, 304);
+            this.btnUpdate.Location = new System.Drawing.Point(299, 348);
             this.btnUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(99, 31);
@@ -128,16 +130,34 @@
             // sitesView
             // 
             this.sitesView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.sitesView.Location = new System.Drawing.Point(12, 183);
+            this.sitesView.Location = new System.Drawing.Point(12, 239);
             this.sitesView.Name = "sitesView";
             this.sitesView.Size = new System.Drawing.Size(658, 102);
             this.sitesView.TabIndex = 8;
+            // 
+            // kryptonLabel5
+            // 
+            this.kryptonLabel5.Location = new System.Drawing.Point(28, 176);
+            this.kryptonLabel5.Name = "kryptonLabel5";
+            this.kryptonLabel5.Size = new System.Drawing.Size(60, 20);
+            this.kryptonLabel5.TabIndex = 9;
+            this.kryptonLabel5.Values.Text = "Auth Key";
+            // 
+            // txtAuthKey
+            // 
+            this.txtAuthKey.Location = new System.Drawing.Point(94, 173);
+            this.txtAuthKey.Name = "txtAuthKey";
+            this.txtAuthKey.Size = new System.Drawing.Size(243, 23);
+            this.txtAuthKey.TabIndex = 10;
+            this.txtAuthKey.Text = "kryptonTextBox1";
             // 
             // SystemForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(682, 346);
+            this.ClientSize = new System.Drawing.Size(682, 437);
+            this.Controls.Add(this.txtAuthKey);
+            this.Controls.Add(this.kryptonLabel5);
             this.Controls.Add(this.sitesView);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.kryptonLabel4);
@@ -151,6 +171,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "SystemForm";
             this.Text = "SystemForm";
+            this.Load += new System.EventHandler(this.SystemForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.sitesView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -169,5 +190,7 @@
         private Krypton.Toolkit.KryptonTextBox txtRid;
         private Krypton.Toolkit.KryptonButton btnUpdate;
         private Krypton.Toolkit.KryptonDataGridView sitesView;
+        private Krypton.Toolkit.KryptonLabel kryptonLabel5;
+        private Krypton.Toolkit.KryptonTextBox txtAuthKey;
     }
 }
